@@ -1,24 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { EntryController, RedirectController } from './controllers';
+
+import Home from './pages/home';
+import Login from './pages/login';
+import Write from './pages/write';
+import Signup from './pages/signup';
+import Article from './pages/article';
+import MyArticles from './pages/myArticles';
 
 function App() {
+  const queryClient = new QueryClient();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <RedirectController>
+                <Login />
+              </RedirectController>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <RedirectController>
+                <Signup />
+              </RedirectController>
+            }
+          />
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/article/write"
+            element={
+              <EntryController>
+                <Write />
+              </EntryController>
+            }
+          />
+          <Route
+            path="/article/:articleId/write"
+            element={
+              <EntryController>
+                <Write />
+              </EntryController>
+            }
+          />
+          <Route path="/article/:articleId" element={<Article />} />
+          <Route
+            path="/me"
+            element={
+              <EntryController>
+                <MyArticles />
+              </EntryController>
+            }
+          />
+        </Routes>
+      </Router>
+    </QueryClientProvider>
   );
 }
 
