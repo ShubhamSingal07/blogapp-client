@@ -45,7 +45,6 @@ export default function Write() {
     const errors = await validateForm(values);
 
     if (action === 'schedule' && !values.publishTime) {
-      console.log('time', values.publishTime);
       const errorsObj = { ...errors, publishTime: 'Time is required for scheduling' };
       setTouched(errorsObj);
       return setErrors(errorsObj);
@@ -69,13 +68,10 @@ export default function Write() {
       delete valuesObj.publishTime;
     }
 
-    console.log('making post request');
     const data = await customFetch({ url: '/api/article', method: 'post', body: valuesObj });
 
-    console.log('post request done', data.articleId, action);
 
     if (data.articleId && action === 'schedule') {
-      console.log('making put request');
       await customFetch({
         url: `/api/article/${data.articleId}/schedule`,
         method: 'put',

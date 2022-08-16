@@ -49,7 +49,7 @@ export default function Login() {
           </div>
 
           <div className="flex items-center justify-between">
-            <Button type="submmit">Login</Button>
+            <Button type="submit">Login</Button>
             <Link to="/signup">Signup</Link>
           </div>
         </Form>
